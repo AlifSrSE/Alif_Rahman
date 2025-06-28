@@ -3,16 +3,56 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, query, deleteDoc, doc } from 'firebase/firestore';
 
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+// --- IMPORTANT: Firebase Configuration for Local Development ---
+// When running locally with `npm run dev` (Vite), __app_id, __firebase_config, and __initial_auth_token are NOT available.
+// You MUST provide your Firebase project's configuration via environment variables.
+//
+// STEP 1: Create a .env.local file in your project root (e.g., AlifDev/.env.local)
+//         This file should be at the same level as your package.json, vite.config.js, etc.
+//
+// STEP 2: Add your Firebase credentials to .env.local like this (REPLACE ALL PLACEHOLDERS):
+//         You can find these values in your Firebase project console: Project settings -> General.
+//         VITE_ prefix is REQUIRED for Vite to expose environment variables to the browser.
+//
+// VITE_FIREBASE_API_KEY="YOUR_API_KEY_FROM_FIREBASE_CONSOLE"
+// VITE_FIREBASE_AUTH_DOMAIN="YOUR_PROJECT_ID.firebaseapp.com"
+// VITE_FIREBASE_PROJECT_ID="YOUR_PROJECT_ID" // This is crucial and must be provided
+// VITE_FIREBASE_STORAGE_BUCKET="YOUR_PROJECT_ID.appspot.com"
+// VITE_FIREBASE_MESSAGING_SENDER_ID="YOUR_MESSAGING_SENDER_ID"
+// VITE_FIREBASE_APP_ID="YOUR_FIREBASE_APP_ID"
+// VITE_FIREBASE_MEASUREMENT_ID="G-YOUR_MEASUREMENT_ID" // Optional, if using Google Analytics for Firebase
+//
+// VITE_APP_ID="default-local-alifdev" // A unique identifier for your app's local data in Firestore
+
+// Determine Firebase config based on the execution environment
+const firebaseConfig = typeof __firebase_config !== 'undefined' && Object.keys(__firebase_config).length > 0
+  ? JSON.parse(__firebase_config) // Use Canvas-provided config when running in Canvas
+  : { // Fallback for local development using Vite's import.meta.env
+      apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+      authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+      projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+      storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+      appId: import.meta.env.VITE_FIREBASE_APP_ID,
+      measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+    };
+
+// Determine app ID based on the execution environment
+// __app_id is provided by Canvas; VITE_APP_ID is from your local .env.local file
+const appId = typeof __app_id !== 'undefined' ? __app_id : (import.meta.env.VITE_APP_ID || 'default-local-app-id');
+
+// initialAuthToken is specifically provided by Canvas for authentication;
+// locally, we'll rely on anonymous sign-in or other auth methods.
 const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
+// Helper component for displaying skills
 const SkillBadge = ({ skill }) => (
   <span className="inline-block bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded-full mr-2 mb-2">
     {skill}
   </span>
 );
 
+// Main App Component
 function App() {
   const [db, setDb] = useState(null);
   const [auth, setAuth] = useState(null);
@@ -21,8 +61,9 @@ function App() {
   const [newItemName, setNewItemName] = useState('');
   const [newItemDescription, setNewItemDescription] = useState('');
   const [newItemLink, setNewItemLink] = useState('');
-  const [isAuthReady, setIsAuthReady] = useState(false);
+  const [isAuthReady, setIsAuthReady] = useState(false); // To track auth state readiness
 
+  // Pre-populate some data from your CV for a richer initial display
   const professionalSkills = [
     "TypeScript", "Laravel", "Python", "ReactJS", "NextJs", "NodeJs",
     "JavaScript", "VueJS", "Wordpress", "PHP", "Tailwind CSS", "MongoDB",
@@ -54,14 +95,14 @@ function App() {
         Focused on React, Laravel & WordPress for website management, including theme and plugin development. Proficient in PHP, MySQL, and JavaScript, handled a wide range of frontend and backend tasks seamlessly.
         As a Project Lead, delivered high-quality web solutions using React Native, Laravel frameworks, and Bootstrap across various projects, ensuring performance, responsiveness, and clean architecture.`,
       projects: ["Shokkhom", "BNPS-Bangladesh Nari Progati Sangha", "The Share-Net International Digital Platform", "International Panel for Deltas, Coastal Areas, and Islands (IPDC)", "ARTICLE 19-Defending freedom of expression and information"],
-      link: "info@redorangecom.com"
+      link: "info@redorangecom.com" // Placeholder for contact
     },
     {
       title: "Software Engineer",
       company: "Kay & Que Limited (IT Unit)",
       duration: "01/2023 - 01/2024",
       description: `Handled full backend tasks - updates, maintenance, configuration - and integrated APIs with parameter handling and encryption. Skilled in Laravel, WordPress, PHP, MySQL, HTML, CSS, JavaScript, and Bootstrap, with experience in migrations.`,
-      link: "knq@multimodebd.com"
+      link: "knq@multimodebd.com" // Placeholder for contact
     },
     {
       title: "Software Developer (Python)",
@@ -98,39 +139,68 @@ function App() {
   ];
 
   useEffect(() => {
-    const app = initializeApp(firebaseConfig);
-    const firestoreDb = getFirestore(app);
-    const firebaseAuth = getAuth(app);
+    // Initialize Firebase only if projectId and apiKey are explicitly provided and not placeholders
+    if (firebaseConfig.projectId && firebaseConfig.apiKey && firebaseConfig.projectId !== "your-project-id" && firebaseConfig.apiKey !== "YOUR_FIREBASE_API_KEY_HERE") {
+      try {
+        const app = initializeApp(firebaseConfig);
+        const firestoreDb = getFirestore(app);
+        const firebaseAuth = getAuth(app);
 
-    setDb(firestoreDb);
-    setAuth(firebaseAuth);
+        setDb(firestoreDb);
+        setAuth(firebaseAuth);
 
-    const unsubscribeAuth = onAuthStateChanged(firebaseAuth, async (user) => {
-      if (user) {
-        setUserId(user.uid);
-      } else {
-        if (initialAuthToken) {
-          try {
-            await signInWithCustomToken(firebaseAuth, initialAuthToken);
-            setUserId(firebaseAuth.currentUser.uid);
-          } catch (error) {
-            console.error("Error signing in with custom token:", error);
-            await signInAnonymously(firebaseAuth);
-            setUserId(firebaseAuth.currentUser.uid);
+        const unsubscribeAuth = onAuthStateChanged(firebaseAuth, async (user) => {
+          if (user) {
+            setUserId(user.uid);
+          } else {
+            // Only try to sign in with custom token if available (from Canvas)
+            if (initialAuthToken) {
+              try {
+                await signInWithCustomToken(firebaseAuth, initialAuthToken);
+                setUserId(firebaseAuth.currentUser.uid);
+              } catch (error) {
+                console.error("Error signing in with custom token:", error);
+                // Fallback to anonymous on token failure
+                try {
+                  await signInAnonymously(firebaseAuth);
+                  setUserId(firebaseAuth.currentUser.uid);
+                } catch (anonError) {
+                  console.error("Error signing in anonymously:", anonError);
+                }
+              }
+            } else {
+              // For local development or no initial token, sign in anonymously
+              try {
+                await signInAnonymously(firebaseAuth);
+                setUserId(firebaseAuth.currentUser.uid);
+              } catch (anonError) {
+                console.error("Error signing in anonymously:", anonError);
+              }
+            }
           }
-        } else {
-          await signInAnonymously(firebaseAuth);
-          setUserId(firebaseAuth.currentUser.uid);
-        }
+          setIsAuthReady(true); // Auth state is ready after initial check or sign-in attempt
+        });
+
+        // Cleanup auth listener on component unmount
+        return () => unsubscribeAuth();
+      } catch (error) {
+        console.error("Firebase initialization failed:", error);
+        setIsAuthReady(true); // Allow UI to render even if init fails, to show error message
       }
+    } else {
+      // If Firebase config is missing or contains placeholders, log an error and mark auth as ready
+      // so the UI can display the helpful error message.
+      console.error("Firebase configuration is incomplete or contains placeholders. Please check your .env.local file or Canvas environment variables.");
       setIsAuthReady(true);
-    });
-    return () => unsubscribeAuth();
-  }, []);
+    }
+  }, []); // Empty dependency array ensures this effect runs only once on component mount
 
   useEffect(() => {
+    // Listen for portfolio items ONLY if Firebase DB and user ID are properly set up AND auth is ready
     if (db && userId && isAuthReady) {
+      // Collection path for public data: /artifacts/{appId}/public/data/{your_collection_name}
       const portfolioCollectionRef = collection(db, `artifacts/${appId}/public/data/portfolio`);
+      // No orderBy is used as per instructions to avoid index issues
       const q = query(portfolioCollectionRef);
 
       const unsubscribeSnapshot = onSnapshot(q, (snapshot) => {
@@ -142,6 +212,8 @@ function App() {
       }, (error) => {
         console.error("Error fetching portfolio items:", error);
       });
+
+      // Cleanup snapshot listener on component unmount or when dependencies change
       return () => unsubscribeSnapshot();
     }
   }, [db, userId, isAuthReady]); // Re-run effect if db, userId, or isAuthReady changes
@@ -149,32 +221,36 @@ function App() {
   const addPortfolioItem = async () => {
     if (!newItemName.trim() || !newItemDescription.trim()) {
       console.warn("Name and description cannot be empty.");
+      // You could display a temporary message to the user here
       return;
     }
-    if (!db) {
-      console.error("Firestore database not initialized.");
+    if (!db || !userId) {
+      console.error("Firestore database not initialized or user not authenticated.");
+      // Display a user-friendly error message
       return;
     }
     try {
+      // Collection path for public data
       const portfolioCollectionRef = collection(db, `artifacts/${appId}/public/data/portfolio`);
       await addDoc(portfolioCollectionRef, {
         name: newItemName,
         description: newItemDescription,
-        link: newItemLink, 
+        link: newItemLink,
         createdAt: serverTimestamp(),
-        userId: userId
+        userId: userId // Store the ID of the user who added it
       });
       setNewItemName('');
       setNewItemDescription('');
       setNewItemLink('');
     } catch (error) {
       console.error("Error adding portfolio item:", error);
+      // Display user-friendly error message
     }
   };
 
   const deletePortfolioItem = async (id) => {
-    if (!db) {
-      console.error("Firestore database not initialized.");
+    if (!db || !userId) {
+      console.error("Firestore database not initialized or user not authenticated.");
       return;
     }
     try {
@@ -182,17 +258,49 @@ function App() {
       if (itemToDelete && itemToDelete.userId === userId) {
         await deleteDoc(doc(db, `artifacts/${appId}/public/data/portfolio`, id));
       } else {
-        console.warn("You can only delete your own portfolio items.");
+        console.warn("You can only delete your own portfolio items or you are not authorized.");
+        // Instead of alert(), implement a custom modal message or a temporary notification.
       }
     } catch (error) {
       console.error("Error deleting portfolio item:", error);
     }
   };
 
+  // Display loading screen until authentication state is determined
   if (!isAuthReady) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-        <p className="text-xl">Loading your personal website...</p>
+        <p className="text-xl animate-pulse">Loading your personal website...</p>
+      </div>
+    );
+  }
+
+  // Display Firebase configuration error if running locally and config is incomplete/placeholder
+  if (!firebaseConfig.projectId || !firebaseConfig.apiKey || firebaseConfig.projectId === "your-project-id" || firebaseConfig.apiKey === "YOUR_FIREBASE_API_KEY_HERE") {
+    return (
+      <div className="min-h-screen bg-red-100 dark:bg-red-900 text-red-900 dark:text-red-100 font-inter antialiased flex items-center justify-center p-8">
+        <div className="bg-white dark:bg-red-800 p-8 rounded-lg shadow-xl text-center max-w-lg">
+          <h3 className="text-2xl font-bold mb-4">Firebase Configuration Error!</h3>
+          <p className="mb-4">
+            It looks like your Firebase project ID or API Key is missing or still using placeholder values.
+          </p>
+          <p className="mb-4 text-left">
+            **To run locally (`localhost:5173`), you MUST:**
+            <br /><br />
+            1.  Create a file named `.env.local` in the root of your `AlifDev` project.
+            <br />
+            2.  Populate it with your *actual* Firebase project credentials from the Firebase Console (Project settings &gt; General).
+            <br />
+            3.  Ensure each variable is prefixed with `VITE_` (e.g., `VITE_FIREBASE_API_KEY="..."`).
+            <br />
+            4.  **Remove any placeholder text** like `"YOUR_API_KEY_HERE"`.
+            <br />
+            5.  Restart your development server (`npm run dev`).
+          </p>
+          <p className="text-sm">
+            The Canvas environment will automatically provide these values when deployed here.
+          </p>
+        </div>
       </div>
     );
   }
@@ -235,6 +343,7 @@ function App() {
         <h3 className="text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100 text-center border-b-2 border-blue-500 pb-2">About Me</h3>
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
           <div className="flex-shrink-0 w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden shadow-xl border-4 border-blue-400 dark:border-blue-600">
+            {/* Replace with your actual profile picture if available, otherwise use a placeholder */}
             <img
               src="https://placehold.co/192x192/ADD8E6/000000?text=Alif"
               alt="Alif Rahman"
@@ -306,7 +415,7 @@ function App() {
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* Projects Section (Pre-populated from CV) */}
       <section id="projects" className="container mx-auto my-12 p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg transition duration-300 hover:shadow-2xl">
         <h3 className="text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100 text-center border-b-2 border-blue-500 pb-2">My Personal Projects</h3>
         <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">Note: The projects below are pre-populated from your CV. You can add more dynamically using the form below, which will be saved in Firestore!</p>
@@ -314,7 +423,7 @@ function App() {
         {/* Dynamic Project Addition Form */}
         <div className="mb-10 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-inner">
           <h4 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Add New Project (Firebase)</h4>
-          <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">Your User ID: {userId}</p>
+          {db && userId && <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">Your User ID: {userId}</p>}
           <div className="space-y-4">
             <div>
               <label htmlFor="newItemName" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Project Name</label>
@@ -358,7 +467,7 @@ function App() {
           </div>
         </div>
 
-        {/* Hardcoded Projects */}
+        {/* Hardcoded Projects from CV */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
           {[
             {
@@ -394,14 +503,17 @@ function App() {
             {
               name: "Emotion Based Music Player",
               description: "A website which detects emotion using image/emojis and plays musics on the preference. Attributes such as login/sign-up, playlist, genre, country preference, artist preference, favourite etc. is present. Languages: Html, Css, JavaScript, Bootstrap, Php, MySql.",
+              // No direct GitHub link found in CV, placeholder
             },
              {
               name: "Employee Management System",
               description: "Built to manage employees of a company. Login/signup interfaces, employee data, leave request, leave approval, salary information, yearly bonus etc. all are present to manage a company's employees. Languages: Html, Css, JavaScript, Bootstrap, Php, MySql.",
+              // No direct GitHub link found in CV, placeholder
             },
             {
               name: "Movie & Halls Info",
               description: "Built a movie review and hall selector website where movie reviews and trailers can be seen. Moreover, hall information and booking tickets can be done with this website. Languages: Html, Css, JavaScript, Bootstrap, Php, MySql.",
+              // No direct GitHub link found in CV, placeholder
             }
           ].map((project, index) => (
             <div key={`static-${index}`} className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow-md transition duration-300 hover:shadow-xl transform hover:scale-105">
@@ -436,7 +548,7 @@ function App() {
                   </a>
                 )}
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">Added by: {item.userId}</p>
-                {item.userId === userId && (
+                {item.userId === userId && ( // Only show delete for current user's items
                   <button
                     onClick={() => deletePortfolioItem(item.id)}
                     className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-md transition duration-300 transform hover:scale-110"

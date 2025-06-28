@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, query, orderBy, deleteDoc, doc } from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, query, deleteDoc, doc } from 'firebase/firestore';
 
 const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
@@ -21,7 +21,7 @@ function App() {
   const [newItemName, setNewItemName] = useState('');
   const [newItemDescription, setNewItemDescription] = useState('');
   const [newItemLink, setNewItemLink] = useState('');
-  const [isAuthReady, setIsAuthReady] = useState(false); 
+  const [isAuthReady, setIsAuthReady] = useState(false);
 
   const professionalSkills = [
     "TypeScript", "Laravel", "Python", "ReactJS", "NextJs", "NodeJs",
@@ -156,12 +156,11 @@ function App() {
       return;
     }
     try {
-      // Collection path for public data
       const portfolioCollectionRef = collection(db, `artifacts/${appId}/public/data/portfolio`);
       await addDoc(portfolioCollectionRef, {
         name: newItemName,
         description: newItemDescription,
-        link: newItemLink,
+        link: newItemLink, 
         createdAt: serverTimestamp(),
         userId: userId
       });
@@ -236,7 +235,6 @@ function App() {
         <h3 className="text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100 text-center border-b-2 border-blue-500 pb-2">About Me</h3>
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
           <div className="flex-shrink-0 w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden shadow-xl border-4 border-blue-400 dark:border-blue-600">
-            {/* Replace with your actual profile picture if available, otherwise use a placeholder */}
             <img
               src="https://placehold.co/192x192/ADD8E6/000000?text=Alif"
               alt="Alif Rahman"
@@ -308,7 +306,7 @@ function App() {
         </div>
       </section>
 
-      {/* Projects Section (Pre-populated from CV) */}
+      {/* Projects Section */}
       <section id="projects" className="container mx-auto my-12 p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg transition duration-300 hover:shadow-2xl">
         <h3 className="text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100 text-center border-b-2 border-blue-500 pb-2">My Personal Projects</h3>
         <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">Note: The projects below are pre-populated from your CV. You can add more dynamically using the form below, which will be saved in Firestore!</p>
@@ -540,8 +538,6 @@ function App() {
         <p>&copy; {new Date().getFullYear()} Alif Rahman. All rights reserved.</p>
         <p className="text-sm mt-2">Crafted with React, Tailwind CSS, and powered by Firestore.</p>
       </footer>
-      {/* Tailwind CSS Script */}
-      <script src="https://cdn.tailwindcss.com"></script>
        <style dangerouslySetInnerHTML={{__html: `
         @keyframes fadeInDown {
           0% {

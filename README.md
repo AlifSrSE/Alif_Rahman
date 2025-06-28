@@ -1,6 +1,6 @@
-# AlifDev - Senior Software Engineer Portfolio
+# Alif Rahman - Senior Software Engineer Portfolio
 
-## 🚀 Welcome to AlifDev!
+## 🚀 Welcome to Alif Rahman!
 
 This is the personal portfolio website of Alif Rahman, a Senior Software Engineer with a passion for creating user-friendly, visually appealing, and scalable web applications. This platform serves as a dynamic showcase of my professional experience, technical skills, personal projects, educational background, and notable achievements.
 
@@ -46,7 +46,7 @@ The website is designed to be fully responsive, ensuring an optimal viewing expe
 
 ```
 
-AlifDev/
+Alif_Rahman/
 ├── public/
 │   └── index.html           \# Main HTML file
 ├── src/
@@ -78,8 +78,8 @@ Follow these steps to get a copy of the project up and running on your local mac
 
 ```
 
-git clone [https://github.com/AlifSrSE/AlifDev.git](https://www.google.com/search?q=https://github.com/AlifSrSE/AlifDev.git)
-cd AlifDev
+git clone [https://github.com/AlifSrSE/Alif_Rahman.git](https://www.google.com/search?q=https://github.com/AlifSrSE/Alif_Rahman.git)
+cd Alif_Rahman
 
 ```
 
@@ -134,7 +134,7 @@ This project uses Firebase for dynamic content storage (Firestore) and anonymous
 
 4. **Create `.env.local` file:**
 
-* In the **root directory** of your `AlifDev` project (where `package.json` is located), create a new file named `.env.local`.
+* In the **root directory** of your `Alif_Rahman` project (where `package.json` is located), create a new file named `.env.local`.
 
 * Add your Firebase configuration to this file, **prefixed with `VITE_`**, and replace the placeholder values with your *actual* credentials.
 
@@ -146,7 +146,7 @@ This project uses Firebase for dynamic content storage (Firestore) and anonymous
   VITE_FIREBASE_MESSAGING_SENDER_ID="YOUR_ACTUAL_MESSAGING_SENDER_ID"
   VITE_FIREBASE_APP_ID="YOUR_ACTUAL_FIREBASE_APP_ID"
   VITE_FIREBASE_MEASUREMENT_ID="G-YOUR_ACTUAL_MEASUREMENT_ID" # If you enabled Analytics
-  VITE_APP_ID="default-local-alifdev" # A unique ID for local data
+  VITE_APP_ID="default-local-Alif_Rahman" # A unique ID for local data
   
   ```
 
@@ -173,16 +173,16 @@ The application should now open in your browser at `http://localhost:5173`.
 This project can be easily deployed to GitHub Pages using `gh-pages`.
 
 1. **Configure `package.json` for `gh-pages`:**
-   Ensure your `package.json` includes these lines (replace `your-username` and `AlifDev` accordingly):
+   Ensure your `package.json` includes these lines (replace `your-username` and `Alif_Rahman` accordingly):
 
 ```
 
 {
-"name": "alifdev",
+"name": "Alif_Rahman",
 "private": true,
 "version": "0.0.0",
 "type": "module",
-"homepage": "[https://your-username.github.io/AlifDev](https://www.google.com/url?sa=E&source=gmail&q=https://your-username.github.io/AlifDev)",
+"homepage": "[https://your-username.github.io/Alif_Rahman](https://www.google.com/url?sa=E&source=gmail&q=https://your-username.github.io/Alif_Rahman)",
 "scripts": {
 "dev": "vite",
 "build": "vite build",
@@ -220,7 +220,7 @@ measurementId: "G-YOUR\_ACTUAL\_MEASUREMENT\_ID" // \<--- REPLACE THIS (if used)
 
 ```
 
-Make sure `appId` is also a unique string suitable for deployment, e.g., `'alifdev-github-pages'`.
+Make sure `appId` is also a unique string suitable for deployment, e.g., `'Alif_Rahman-github-pages'`.
 
 3. **Deploy the project:**
 
@@ -234,7 +234,7 @@ yarn deploy
 
 ```
 
-This command will build your project and push the `dist` folder content to the `gh-pages` branch of your GitHub repository. Your site will typically be available at `https://your-username.github.io/AlifDev`.
+This command will build your project and push the `dist` folder content to the `gh-pages` branch of your GitHub repository. Your site will typically be available at `https://your-username.github.io/Alif_Rahman`.
 
 ## 🔒 Firebase Security Rules (VERY IMPORTANT!)
 
@@ -250,7 +250,7 @@ match /databases/{database}/documents {
 // Allows anyone who is authenticated (including anonymous users) to read and write
 // to the 'portfolio' collection under your app's public data path.
 // Replace `your-app-id-here` with the actual appId used in your React code
-// (e.g., 'alifdev-github-pages' for deployed, or 'default-local-alifdev' for local).
+// (e.g., 'Alif_Rahman-github-pages' for deployed, or 'default-local-Alif_Rahman' for local).
 match /artifacts/{appId}/public/data/portfolio/{documentId} {
 allow read: if request.auth \!= null;
 // For adding/deleting, you might want to check if the user ID matches

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://alifsrse.github.io/AlifDev",
+  "homepage": "https://alifsrse.github.io/Alif_Rahman",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

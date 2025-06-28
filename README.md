@@ -273,8 +273,6 @@ Feel free to reach out if you have any questions, opportunities, or just want to
 
 * **GitHub**: [github.com/AlifSrSE](https://github.com/AlifSrSE)
 
-* **Old Portfolio**: [alifsrse.github.io/Alif_Rahman/](https://alifsrse.github.io/Alif_Rahman/)
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

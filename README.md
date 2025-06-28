@@ -156,7 +156,7 @@ This project uses Firebase for dynamic content storage (Firestore) and anonymous
 
 After completing the Firebase setup, run the development server:
 
-````
+```
 
 npm run dev
 

@@ -1,6 +1,6 @@
 # Alif Rahman - Senior Software Engineer Portfolio
 
-![Alif Rahman - Website Preview](./assets/WebsitePreview.jpeg)
+![Alif Rahman - Website Preview](./src/assets/WebsitePreview.jpeg)
 
 ## 🚀 Welcome to Alif Rahman!
 

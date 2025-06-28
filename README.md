@@ -1,5 +1,7 @@
 # Alif Rahman - Senior Software Engineer Portfolio
 
+![Alif Rahman - Website Preview](./assets/WebsitePreview.JPG)
+
 ## 🚀 Welcome to Alif Rahman!
 
 This is the personal portfolio website of Alif Rahman, a Senior Software Engineer with a passion for creating user-friendly, visually appealing, and scalable web applications. This platform serves as a dynamic showcase of my professional experience, technical skills, personal projects, educational background, and notable achievements.

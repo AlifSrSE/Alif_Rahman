@@ -1,4 +1,3 @@
-```markdown
 # AlifDev - Senior Software Engineer Portfolio
 
 ## 🚀 Welcome to AlifDev!

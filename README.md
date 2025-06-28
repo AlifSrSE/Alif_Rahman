@@ -260,13 +260,6 @@ allow write: if request.auth \!= null; // For simplicity, allows any authenticat
 }
 
 ```
-// You can add more specific rules for other collections as needed.
-```
-
-}
-}
-
-```
 
 **Deploy these rules** from your Firebase Console under **Build > Firestore Database > Rules** tab.
 
@@ -285,4 +278,3 @@ Feel free to reach out if you have any questions, opportunities, or just want to
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```

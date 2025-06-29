@@ -235,9 +235,7 @@ function App() {
     );
   }
 
-  const showConfigWarning = (!firebaseConfig.projectId || !firebaseConfig.apiKey ||
-                            firebaseConfig.projectId === "alifrahman-8aae8" ||
-                            firebaseConfig.apiKey === "AIzaSyAHx7sKMMeDcv8xX0-78JFTM294K39STEQ");
+  const showConfigWarning = (!firebaseConfig.projectId || !firebaseConfig.apiKey);
 
   if (showConfigWarning && typeof __firebase_config === 'undefined') {
     return (

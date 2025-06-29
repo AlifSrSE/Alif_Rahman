@@ -5,13 +5,13 @@ import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, query, d
 import AlifRahmanImg from './assets/AlifRahman.jpg';
 
 const defaultFirebaseConfig = {
-  apiKey: "YOUR_ACTUAL_FIREBASE_API_KEY",
-  authDomain: "YOUR_ACTUAL_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_ACTUAL_PROJECT_ID",
-  storageBucket: "YOUR_ACTUAL_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_ACTUAL_MESSAGING_SENDER_ID",
-  appId: "YOUR_ACTUAL_FIREBASE_APP_ID",
-  measurementId: "G-YOUR_ACTUAL_MEASUREMENT_ID"
+  apiKey: "AIzaSyAHx7sKMMeDcv8xX0",
+  authDomain: "alifrahman-8aae8.firebaseapp.com",
+  projectId: "alifrahman-8aae8",
+  storageBucket: "alifrahman-8aae8.firebasestorage.app",
+  messagingSenderId: "1078820847179",
+  appId: "1:1078820847179:web:a2d977f07b6a0bad0757ce",
+  measurementId: "G-73GJGQ7DWH"
 };
 
 const firebaseConfig = typeof __firebase_config !== 'undefined' && Object.keys(__firebase_config).length > 0

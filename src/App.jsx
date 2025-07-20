@@ -53,20 +53,28 @@ function App() {
       title: "Sr. Software Engineer",
       company: "Druto Fintech Limited",
       duration: "01/2025 - Present",
-      description: `A digital lending platform connecting financial institutions with MSMEs, enabling easy access to CMSME loans through a unified Lending Panel.
+      techStack: 'TypeScript, React.js, Next.js, Node.js, MongoDB, Python, Flask',
+      description: 
+        `
         Developed and maintained scalable web applications using TypeScript, ReactJs, NextJs, NodeJs & MongoDB.
-        Led Git workflows, handled deployments, and built robust APIs for high-performance systems.
+        Lead developer for the NID OCR project, overseeing architecture, delivery, and cross-functional coordination.
+        Delivered core modules(CRUD, user/account, loan & savings) for a digital lending platform.
         Implemented custom AI features using Python, integrating them into production systems. Managed key system folders (Admin, API, Web), ensuring smooth AI and backend integration across services.
-        Built and deployed core modules - CRUD, user/account management, loan and savings features - for a digital lending platform. Led successful rollouts of new product (Britto) and features in a live environment.`,
+        Built and maintained scalable web apps. Designed robust APIs, custom AI features, led Git workflows, managed deployments, led live rollout of the Britto product 
+        `,
       link: "https://drutoloan.com"
     },
     {
       title: "Full Stack Web Developer",
       company: "RedOrange Media & Communications",
       duration: "01/2024 - 11/2024",
-      description: `An international consultancy house for media and communications.
-        Focused on React, Laravel & WordPress for website management, including theme and plugin development. Proficient in PHP, MySQL, and JavaScript, handled a wide range of frontend and backend tasks seamlessly.
-        As a Project Lead, delivered high-quality web solutions using React Native, Laravel frameworks, and Bootstrap across various projects, ensuring performance, responsiveness, and clean architecture.`,
+      techStack: 'PHP, Laravel, WordPress, React, React Native, MySQL, JavaScript, Bootstrap',
+      description: 
+        `
+        Led multiple web and mobile projects, custom theme and plugin development in WordPress, integrating APIs, optimizing MySQL queries.
+        Oversaw delivery as Project Lead, maintaining high code quality and eﬃcient workflows across distributed teams.
+        Led multiple web and mobile projects, delivering full-stack solutions using Laravel with a focus on clean architecture and performance
+        `,
       projects: ["Shokkhom", "BNPS-Bangladesh Nari Progati Sangha", "The Share-Net International Digital Platform", "International Panel for Deltas, Coastal Areas, and Islands (IPDC)", "ARTICLE 19-Defending freedom of expression and information"],
       link: "info@redorangecom.com"
     },
@@ -74,21 +82,26 @@ function App() {
       title: "Software Engineer",
       company: "Kay & Que Limited (IT Unit)",
       duration: "01/2023 - 01/2024",
-      description: `Handled full backend tasks - updates, maintenance, configuration - and integrated APIs with parameter handling and encryption. Skilled in Laravel, WordPress, PHP, MySQL, HTML, CSS, JavaScript, and Bootstrap, with experience in migrations.`,
+      techStack: 'Laravel, WordPress, PHP, MySQL, HTML, CSS, JavaScript, Bootstrap',
+      description: 
+        `
+        Handled full backend responsibilities including updates, maintenance, server configuration, and database migrations.
+        Built and maintained dynamic websites and CMS solutions, ensuring cross-browser compatibility and responsive design.
+        Integrated third-party API with secure parameter handling and encryption to ensure data integrity and security
+        `,
       link: "knq@multimodebd.com" 
-    },
-    {
-      title: "Software Developer (Python)",
-      company: "NDA (Machine Learning, AI platform based company)",
-      duration: "12/2021 - 09/2022",
-      description: `Led AI projects with expertise in Python, TensorFlow, OpenCV, and YOLO, focusing on model training and deployment for computer vision. Built systems for object, pose, and last-touch detection, staying up to date with deep learning innovations and applying strong problem-solving skills.`,
-      link: "https://colab.research.google.com/drive/11kz1Yi1CNcHAa_yIPdG45dH5csk8AZxQ?usp=sharing"
     },
     {
       title: "CHIEF TECHNOLOGY OFFICER",
       company: "Forecast by Rainfall",
-      duration: "03/2021 - 11/2021",
-      description: `Developed Forecast's main 30+ page responsive website featuring news, games, and music using WordPress with Elementor, Divi, Beaver Builder, and other tools.`,
+      duration: "03/2021 - 09/2022",
+      techStack: 'Python, TensorFlow, OpenCV, YOLO, WordPress, Bootstrap, Html, Css, JavaScript, SwiperJs',
+      description: 
+        `
+        Developed the main website for Forecast —a 30+ page responsive, dynamic site featuring news, games, music, and more.
+        Planned and built multiple UI/UX diagrams for the mobile application, contributing to foundational design and feature planning.
+        Led AI projects, focusing on model training and deployment for computer vision.
+        `,
       link: "https://www.forecastmedia.net/"
     }
   ];

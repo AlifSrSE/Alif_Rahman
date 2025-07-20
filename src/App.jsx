@@ -38,10 +38,10 @@ function App() {
   const [isAuthReady, setIsAuthReady] = useState(false);
 
   const professionalSkills = [
-    "TypeScript", "Laravel", "Python", "ReactJS", "NextJs", "NodeJs",
-    "JavaScript", "VueJS", "Wordpress", "PHP", "Tailwind CSS", "MongoDB",
-    "PostgreSQL", "React Native", "MySQL", "Curl", "FastAPI",
-    "RESTful API", "Ajax"
+    "TypeScript", "React", "React Native", "Python", "Flask", "Laravel",
+    "Php", "Vue", "JavaScript", "NextJs", "NodeJs", "Wordpress",
+    "Bootstrap", "Tailwind Css", "Ajax", "MySQL", "MongoDB",
+    "PostgreSQL", "Curl", "FastApi","RESTful Api"
   ];
 
   const technicalTools = [

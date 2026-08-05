@@ -5,7 +5,7 @@
 export const fallbackProjects = [
   { order: 0, name: 'AIVoice Assistant', description: 'Voice-controlled AI desktop assistant powered by OpenAI API for seamless automation.', link: 'https://github.com/AlifSrSE/AlVoiceAssistant', tag: 'AI / ML' },
   { order: 1, name: 'Real Time Surveillance', description: 'AI-powered multi-camera surveillance system with anomaly detection and real-time alerts.', link: 'https://github.com/AlifSrSE/RealTimeSurveillanceSystem', tag: 'Computer Vision' },
-  { order: 2, name: 'Cophee', description: 'A premium e-commerce platform for a coffee shop with integrated subscription management and admin POS.', link: 'https://github.com/AlifSrSE/Cophee', tag: 'Full Stack', icon: '☕' },
+  { order: 2, name: 'Cophee', description: 'A premium e-commerce platform for a coffee shop with integrated subscription management and admin POS.', link: 'https://github.com/AlifSrSE/Cophee', tag: 'Full Stack'},
   { order: 3, name: 'Task Management System', description: 'Enterprise-grade task management tool with full CRUD, filtering, sorting, user authentication, and a RESTful API.', link: 'https://github.com/AlifSrSE/TaskManagementSystem', tag: 'SaaS' },
   { order: 4, name: 'URL Shortener', description: 'URL shortener built with Laravel & React featuring link management, click tracking, and a clean interface.', link: 'https://github.com/AlifSrSE/UrlShortener', tag: 'Web App' },
   { order: 5, name: 'ArcH Real Estates', description: 'Responsive real estate web application with interactive elements and a focus on accessibility and usability.', link: 'https://github.com/AlifSrSE/ArchRealEstates', tag: 'Frontend' },

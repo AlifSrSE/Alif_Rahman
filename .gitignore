@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+pglite-debug.log
+firebase-debug.log
 
 node_modules
 dist
@@ -21,7 +23,10 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.ns?
 
 .env
 .env.local
+
+# Firebase cache
+.firebase/

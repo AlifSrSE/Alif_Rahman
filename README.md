@@ -67,6 +67,21 @@ Firebase uses the hardcoded project config by default; for local overrides, copy
 | `npm run preview` | Preview the production build |
 | `npm run lint` | ESLint (zero-warning policy) |
 | `npm run deploy` | Build + publish `dist/` to GitHub Pages (`gh-pages`) |
+| `npm run test:e2e` | Run Playwright smoke tests (starts a local `vite preview` server) |
+
+## 🧪 End-to-end tests
+
+The portfolio has Playwright smoke tests in `tests/portfolio.spec.js` that verify the page
+title, hero/nav, projects section, and contact section render correctly.
+
+```bash
+pnpm install            # install dependencies (pnpm is required; npm is broken with Vite 7 here)
+npx playwright install chromium   # one-time browser download
+npm run test:e2e        # runs against a local vite preview server
+```
+
+Tests also run automatically via GitHub Actions (`.github/workflows/playwright.yml`) on every
+pull request and push to `master`.
 
 ## 🔥 Firebase Backend Setup
 

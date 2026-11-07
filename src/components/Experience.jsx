@@ -1,13 +1,37 @@
 const experience = [
   {
+    company: "Intelligent Machines Limited",
+    location: "Hybrid",
+    link: "https://intelmachines.ai",
+    roles: [
+      {
+        title: "Tech Lead - Full Stack Product Engineer",
+        duration: "08/2026 - Present",
+        current: true,
+        techStack: 'Team Leadership, Software Architecture, AWS, GCP, Node.js, Python, TypeScript, PostgreSQL, Full-Stack Development, Systems Design, CI/CD, Docker, GitHub',
+        tags: ["#AIFirst", "#Leadership", "#FullStack", "#DevOps"],
+        bullets: [
+          "Technical Leadership: Own architecture, critical technical decisions, engineering standards, and delivery for AI-first enterprise products.",
+          "Hands-on Engineering: Continue to design, code, review, debug, and ship production software alongside the team.",
+          "Full-Stack Product Development: Build across frontend, backend, databases, APIs, distributed systems, and integrations.",
+          "Cloud & DevOps: Own production infrastructure, CI/CD, deployments, monitoring, security, and cloud cost optimization.",
+          "AI-Native Engineering: Establish AI-assisted/agentic coding workflows and standards across the engineering organization.",
+          "Production Ownership: Responsible for reliability, incident response, performance, security, and operational health of production systems.",
+          "Team Leadership: Mentor engineers, provide technical direction, review architecture and code, and raise the engineering bar.",
+          "Product Engineering: Partner with leadership to turn product requirements into scalable, maintainable, production-ready systems.",
+        ],
+      }
+    ]
+  },
+  {
     company: "Daniyal Technologies",
     location: "Remote, USA",
     link: "https://daniyaltechnologies.com",
     roles: [
       {
         title: "Senior Software Engineer",
-        duration: "11/2025 - Present",
-        current: true,
+        duration: "12/2025 - 08/2026",
+        current: false,
         techStack: 'NestJS, TypeScript, PostgreSQL, TypeORM, Redis, BullMQ, AWS S3, Docker, React, Zustand, Playwright',
         tags: ["#Microservices", "#Scale", "#NestJS", "#Redis"],
         bullets: [
@@ -28,8 +52,8 @@ const experience = [
     roles: [
       {
         title: "Team Lead - AI Development",
-        duration: "01/2025 - Present",
-        current: true,
+        duration: "01/2025 - 12/2026",
+        current: false,
         techStack: 'Python, Flask, Django, MongoDB, TensorFlow, PyTorch, Scikit-Learn',
         tags: ["#Fintech", "#AI/ML", "#Leadership"],
         bullets: [
@@ -128,12 +152,14 @@ export default function Experience() {
                 <div style={{ marginBottom: 32 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
                     <h3 style={{ fontSize: 22, fontWeight: 900, color: '#0f172a', margin: 0 }}>{company.company}</h3>
-                    <span style={{
-                      fontSize: 10, fontWeight: 700, padding: '4px 12px', borderRadius: 6,
-                      background: '#f1f5f9', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.1em'
-                    }}>
-                      {company.location}
-                    </span>
+                    {company.location && (
+                      <span style={{
+                        fontSize: 10, fontWeight: 700, padding: '4px 12px', borderRadius: 6,
+                        background: '#f1f5f9', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.1em'
+                      }}>
+                        {company.location}
+                      </span>
+                    )}
                   </div>
                   {company.link && (
                     <a href={company.link} target="_blank" rel="noopener noreferrer" style={{

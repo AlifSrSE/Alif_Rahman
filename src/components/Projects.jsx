@@ -28,7 +28,7 @@ export default function Projects() {
             {project.link && (
               <div style={{ display: 'flex', gap: 24, paddingTop: 8 }}>
                 <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, fontWeight: 900, color: '#3B82F6', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
-                  Github <span style={{ fontSize: 16 }}>↗</span>
+                  {project.linkLabel || 'Github'} <span style={{ fontSize: 16 }}>↗</span>
                 </a>
               </div>
             )}
